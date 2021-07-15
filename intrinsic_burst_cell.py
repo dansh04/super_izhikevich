@@ -6,13 +6,13 @@ Created on Wed Jul 14 14:30:58 2021
 """
 
 import izhikevich_cells as izh
-import numpy as np
-import matplotlib.pyplot as plt
 
-class ibCell(izh):
+
+
+class ibCell(izh.izhCell):
     def __init__(self, stimVal):
-        super.__init(self, stimVal)
-        self.celltype='Generic Izhikevich' # Regular spiking
+        super().__init__(stimVal)
+        self.celltype='Intrinsically_Bursting' # Regular spiking
         self.C = 150
         self.vr = -75
         self.vt = -45
@@ -23,24 +23,11 @@ class ibCell(izh):
         self.d = 130
         self.vpeak = 50
         self.stimVal = stimVal
-def plotMyData(somecell, upLim = 1000):
-    tau = somecell.tau
-    n = somecell.n
-    v = somecell.v
-    celltype = somecell.celltype
-
-    # Plot the results
-    fig = plt.figure()
-    plt.plot(tau*np.arange(0,n),v[0,:].transpose(), 'k-')
-    plt.xlabel('Time Step')
-    plt.xlim([0, upLim])
-    plt.ylabel(celltype + ' Cell Response')
-    plt.show()
-
+        
 def createCell():
     myCell = ibCell(stimVal=4000)        
     myCell.simulate()
-    plotMyData(myCell)
+    izh.plotMyData(myCell)
     
 if __name__=='__main__':
     createCell()
